@@ -129,7 +129,9 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/quiz');
+                  },
                 ),
                 ListTile(
                   title: Text(
@@ -139,7 +141,9 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/genius');
+                  },
                 ),
                 ListTile(
                   title: Text(
@@ -149,7 +153,9 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/memo');
+                  },
                 ),
                 ListTile(
                   title: Text(
