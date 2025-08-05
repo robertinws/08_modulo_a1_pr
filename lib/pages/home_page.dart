@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:modulo_a1_pr/global/cores.dart';
 import 'package:modulo_a1_pr/global/variaveis.dart';
 
 class HomePage extends StatefulWidget {
@@ -63,6 +65,133 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            SafeArea(
+              child: SizedBox(
+                width: double.infinity,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: corEscuro,
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          height: 100,
+                          'assets/images/rosto.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsGeometry.only(left: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: corRoxoMedio,
+                          size: 50,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                ListTile(
+                  title: Text(
+                    'Home',
+                    style: TextStyle(
+                      color: corRoxoMedio,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(
+                    'QuizMyBrain',
+                    style: TextStyle(
+                      color: corRoxoMedio,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(
+                    'GeniusPlay',
+                    style: TextStyle(
+                      color: corRoxoMedio,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(
+                    'MemoCheck',
+                    style: TextStyle(
+                      color: corRoxoMedio,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text(
+                    'Sair',
+                    style: TextStyle(
+                      color: corRoxoMedio,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  onTap: () {
+                    SystemNavigator.pop();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsetsGeometry.all(20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 20,
+              children: [
+                Image.asset(
+                  height: 120,
+                  'assets/images/logo.png',
+                  fit: BoxFit.cover,
+                ),
+                Text('Bem-vindo ao Aprender+'),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
