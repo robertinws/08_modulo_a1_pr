@@ -17,8 +17,9 @@ class _QuizPageState extends State<QuizPage> {
       alternativaSelecionada = -1,
       scoreTotal = 0;
   List<dynamic> alternativas = [];
-  bool confirmar = false;
+  bool confirmar = false, entradaVF = false;
   String tipoAtual = '';
+  double valorRotacao = 1.0;
 
   @override
   void initState() {
@@ -78,9 +79,36 @@ class _QuizPageState extends State<QuizPage> {
           duration: Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
+        if (paginaAtual == 1) {
+          animacaoEntradaVF();
+        }
       }
     }
     setState(() {});
+  }
+
+  void animacaoEntradaVF() async {
+    await Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        entradaVF = true;
+      });
+    });
+    await Future.delayed(Duration(seconds: 1), () {
+      valorRotacao = 1.2;
+      alternativaSelecionada = 1;
+      setState(() {});
+    });
+    await Future.delayed(Duration(seconds: 1), () {
+      valorRotacao = 1.0;
+      alternativaSelecionada = 0;
+      setState(() {});
+    });
+    await Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        entradaVF = false;
+        alternativaSelecionada = -1;
+      });
+    });
   }
 
   void mostrarResposta() async {
@@ -88,6 +116,7 @@ class _QuizPageState extends State<QuizPage> {
         listQuiz[perguntaAtual]['resposta']) {
       int peso = listQuiz[perguntaAtual]['peso'];
       scoreTotal = scoreTotal + peso;
+      setState(() {});
     }
   }
 
@@ -175,7 +204,71 @@ class _QuizPageState extends State<QuizPage> {
                   )
                 : Container(),
           ),
-          Container(),
+          Container(
+            child: paginaAtual == 1
+                ? SafeArea(
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.all(20),
+                      child: Column(
+                        mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            listQuiz[perguntaAtual]['enunciado'],
+                            style: TextStyle(
+                              color: corRoxoMedio,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Row(
+                            spacing: 40,
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Verdadeiro',
+                                style: TextStyle(
+                                  color: alternativaSelecionada == 0
+                                      ? corRoxoMedio
+                                      : corEscuro,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                'Falso',
+                                style: TextStyle(
+                                  color: alternativaSelecionada == 1
+                                      ? corRoxoMedio
+                                      : corEscuro,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnimatedOpacity(
+                            opacity: entradaVF ? 1 : 0,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                            child: AnimatedRotation(
+                              turns: valorRotacao,
+                              curve: Curves.easeInOut,
+                              duration: Duration(seconds: 1),
+                              child: Icon(
+                                Icons.screen_rotation,
+                                color: corEscuro,
+                                size: 100,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(),
+          ),
           Container(),
         ],
       ),
@@ -194,7 +287,7 @@ class _QuizPageState extends State<QuizPage> {
                 child: Text('Encerrar'),
               ),
               ElevatedButton(
-                onPressed: alternativaSelecionada > -1
+                onPressed: alternativaSelecionada > -1 && !entradaVF
                     ? proximo
                     : null,
                 style: ElevatedButton.styleFrom(
