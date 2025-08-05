@@ -5,5 +5,6 @@ import 'package:flutter/services.dart';
 bool popBateria = false, conexaoInternet = false;
 Battery battery = Battery();
 String caminhoCanal = 'com.example.modulo_a1_pr';
-EventChannel eventInternet = EventChannel('$caminhoCanal/internet');
+EventChannel eventInternet = EventChannel('$caminhoCanal/internet'),
+    eventFones = EventChannel('$caminhoCanal/fones');
 BuildContext? contexto;

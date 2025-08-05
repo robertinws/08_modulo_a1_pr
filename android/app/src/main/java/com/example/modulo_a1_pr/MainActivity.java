@@ -71,7 +71,13 @@ public class MainActivity extends FlutterActivity {
                 brodFones = new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
-                        events.success(audioManager.isWiredHeadsetOn());
+                        if (audioManager.isWiredHeadsetOn()) {
+                            int newValor = (int) (0.7 * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+                            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newValor, 0);
+                            events.success(1);
+                        } else {
+                            events.success(0);
+                        }
                     }
                 };
                 registerReceiver(brodFones, new IntentFilter(AudioManager.ACTION_HEADSET_PLUG));
