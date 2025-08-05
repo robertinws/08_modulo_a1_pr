@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:modulo_a1_pr/global/cores.dart';
@@ -19,6 +21,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void iniciar() async {
+    String jsonListString = await rootBundle.loadString(
+      'assets/jsons/bancoQuestoes.json',
+    );
+    listQuiz = jsonDecode(jsonListString)['perguntas'];
     await Future.delayed(Duration(milliseconds: 500), () async {
       if (!conexaoInternet) {
         await showDialog(
@@ -130,6 +136,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onTap: () {
+                    Navigator.pop(context);
+
                     Navigator.of(context).pushNamed('/quiz');
                   },
                 ),
@@ -142,6 +150,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onTap: () {
+                    Navigator.pop(context);
+
                     Navigator.of(context).pushNamed('/genius');
                   },
                 ),
@@ -154,6 +164,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onTap: () {
+                    Navigator.pop(context);
+
                     Navigator.of(context).pushNamed('/memo');
                   },
                 ),

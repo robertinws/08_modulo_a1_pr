@@ -8,3 +8,4 @@ String caminhoCanal = 'com.example.modulo_a1_pr';
 EventChannel eventInternet = EventChannel('$caminhoCanal/internet'),
     eventFones = EventChannel('$caminhoCanal/fones');
 BuildContext? contexto;
+List<dynamic> listQuiz = [];
