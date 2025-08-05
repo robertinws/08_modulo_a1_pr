@@ -20,6 +20,7 @@ class _QuizPageState extends State<QuizPage> {
   bool confirmar = false, entradaVF = false;
   String tipoAtual = '';
   double valorRotacao = 1.0;
+  EventChannel eventSensor = EventChannel('$caminhoCanal/sensor');
 
   @override
   void initState() {
@@ -28,7 +29,21 @@ class _QuizPageState extends State<QuizPage> {
     iniciar();
   }
 
-  void iniciar() async {}
+  void iniciar() async {
+    eventSensor.receiveBroadcastStream().listen((value) {
+      if (paginaAtual == 1 && !entradaVF) {
+        if (value > 3) {
+          setState(() {
+            alternativaSelecionada = 0;
+          });
+        } else if (value < 3 && value > 0) {
+          setState(() {
+            alternativaSelecionada = 1;
+          });
+        }
+      }
+    });
+  }
 
   void encerrar() async {
     Navigator.pop(context);
@@ -229,7 +244,12 @@ class _QuizPageState extends State<QuizPage> {
                               Text(
                                 'Verdadeiro',
                                 style: TextStyle(
-                                  color: alternativaSelecionada == 0
+                                  color:
+                                      listQuiz[perguntaAtual]['resposta'] ==
+                                              0 &&
+                                          confirmar
+                                      ? Colors.green
+                                      : alternativaSelecionada == 0
                                       ? corRoxoMedio
                                       : corEscuro,
                                   fontSize: 17,
@@ -239,7 +259,12 @@ class _QuizPageState extends State<QuizPage> {
                               Text(
                                 'Falso',
                                 style: TextStyle(
-                                  color: alternativaSelecionada == 1
+                                  color:
+                                      listQuiz[perguntaAtual]['resposta'] ==
+                                              1 &&
+                                          confirmar
+                                      ? Colors.green
+                                      : alternativaSelecionada == 1
                                       ? corRoxoMedio
                                       : corEscuro,
                                   fontSize: 17,
