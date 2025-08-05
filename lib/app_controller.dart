@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modulo_a1_pr/pages/home_page.dart';
 import 'package:modulo_a1_pr/pages/loading_page.dart';
 
 class AppController extends StatelessWidget {
@@ -9,7 +10,10 @@ class AppController extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: {'/': (context) => LoadingPage()},
+      routes: {
+        '/': (context) => LoadingPage(),
+        '/home': (context) => HomePage(),
+      },
     );
   }
 }
