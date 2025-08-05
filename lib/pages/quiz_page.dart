@@ -16,6 +16,7 @@ class _QuizPageState extends State<QuizPage> {
       perguntaAtual = 0,
       alternativaSelecionada = -1,
       scoreTotal = 0;
+  List<int> alternativasRelaciondas = [];
   List<dynamic> alternativas = [];
   bool confirmar = false, entradaVF = false;
   String tipoAtual = '';
@@ -337,47 +338,63 @@ class _QuizPageState extends State<QuizPage> {
                             Row(
                               spacing: 10,
                               children: List.generate(3, (index) {
-                                return Draggable(
-                                  data:
-                                      listQuiz[perguntaAtual]['resposta'][index][0],
-                                  feedback: Container(
-                                    width:
-                                        MediaQuery.sizeOf(
-                                          context,
-                                        ).width *
-                                        0.25,
-                                    decoration: BoxDecoration(),
-                                    child: Padding(
-                                      padding: EdgeInsetsGeometry.all(
-                                        20,
-                                      ),
-                                      child: Text(
-                                        overflow:
-                                            TextOverflow.ellipsis,
-                                        listQuiz[perguntaAtual]['alternativas'][0][index],
-                                      ),
-                                    ),
-                                  ),
-                                  child: Container(
-                                    width:
-                                        MediaQuery.sizeOf(
-                                          context,
-                                        ).width *
-                                        0.25,
-                                    decoration: BoxDecoration(),
-                                    child: Padding(
-                                      padding: EdgeInsetsGeometry.all(
-                                        20,
-                                      ),
-                                      child: Text(
-                                        overflow:
-                                            TextOverflow.ellipsis,
-                                        maxLines: 3,
-                                        listQuiz[perguntaAtual]['alternativas'][0][index],
-                                      ),
-                                    ),
-                                  ),
-                                );
+                                bool ativo = true;
+                                for (
+                                  int i = 0;
+                                  i < alternativasRelaciondas.length;
+                                  i++
+                                ) {
+                                  if (listQuiz[perguntaAtual]['resposta'[index][0]] ==
+                                      alternativasRelaciondas[i]) {
+                                    ativo = false;
+                                  }
+                                }
+                                print(ativo);
+                                return ativo
+                                    ? Draggable(
+                                        data:
+                                            listQuiz[perguntaAtual]['resposta'][index][0],
+                                        feedback: Container(
+                                          width:
+                                              MediaQuery.sizeOf(
+                                                context,
+                                              ).width *
+                                              0.25,
+                                          decoration: BoxDecoration(),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsGeometry.all(
+                                                  20,
+                                                ),
+                                            child: Text(
+                                              overflow: TextOverflow
+                                                  .ellipsis,
+                                              listQuiz[perguntaAtual]['alternativas'][0][index],
+                                            ),
+                                          ),
+                                        ),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.sizeOf(
+                                                context,
+                                              ).width *
+                                              0.25,
+                                          decoration: BoxDecoration(),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsGeometry.all(
+                                                  20,
+                                                ),
+                                            child: Text(
+                                              overflow: TextOverflow
+                                                  .ellipsis,
+                                              maxLines: 3,
+                                              listQuiz[perguntaAtual]['alternativas'][0][index],
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Container();
                               }),
                             ),
                             Row(
@@ -388,9 +405,12 @@ class _QuizPageState extends State<QuizPage> {
                                 return DragTarget(
                                   onAcceptWithDetails: (details) {
                                     if (details.data! == respota) {
+                                      alternativasRelaciondas.add(
+                                        respota,
+                                      );
+                                      setState(() {});
+                                      print(alternativasRelaciondas);
                                       print('correto');
-                                    } else {
-                                      print('errado');
                                     }
                                   },
                                   builder:
