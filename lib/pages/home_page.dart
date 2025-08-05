@@ -73,117 +73,119 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: Column(
-          children: [
-            SafeArea(
-              child: SizedBox(
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: corEscuro,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SafeArea(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: corEscuro,
+                            ),
+                            shape: BoxShape.circle,
                           ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Image.asset(
-                          height: 100,
-                          'assets/images/rosto.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsGeometry.only(left: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          Icons.arrow_back_ios_outlined,
-                          color: corRoxoMedio,
-                          size: 50,
+                          child: Image.asset(
+                            height: 100,
+                            'assets/images/rosto.jpg',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsetsGeometry.only(left: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios_outlined,
+                            color: corRoxoMedio,
+                            size: 50,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Column(
-              children: [
-                ListTile(
-                  title: Text(
-                    'Home',
-                    style: TextStyle(
-                      color: corRoxoMedio,
-                      fontWeight: FontWeight.w500,
+              Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      'Home',
+                      style: TextStyle(
+                        color: corRoxoMedio,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
+                    onTap: () {},
                   ),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: Text(
-                    'QuizMyBrain',
-                    style: TextStyle(
-                      color: corRoxoMedio,
-                      fontWeight: FontWeight.w500,
+                  ListTile(
+                    title: Text(
+                      'QuizMyBrain',
+                      style: TextStyle(
+                        color: corRoxoMedio,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
+                    onTap: () {
+                      Navigator.pop(context);
 
-                    Navigator.of(context).pushNamed('/quiz');
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'GeniusPlay',
-                    style: TextStyle(
-                      color: corRoxoMedio,
-                      fontWeight: FontWeight.w500,
-                    ),
+                      Navigator.of(context).pushNamed('/quiz');
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
+                  ListTile(
+                    title: Text(
+                      'GeniusPlay',
+                      style: TextStyle(
+                        color: corRoxoMedio,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
 
-                    Navigator.of(context).pushNamed('/genius');
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'MemoCheck',
-                    style: TextStyle(
-                      color: corRoxoMedio,
-                      fontWeight: FontWeight.w500,
-                    ),
+                      Navigator.of(context).pushNamed('/genius');
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
+                  ListTile(
+                    title: Text(
+                      'MemoCheck',
+                      style: TextStyle(
+                        color: corRoxoMedio,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
 
-                    Navigator.of(context).pushNamed('/memo');
-                  },
-                ),
-                ListTile(
-                  title: Text(
-                    'Sair',
-                    style: TextStyle(
-                      color: corRoxoMedio,
-                      fontWeight: FontWeight.w500,
-                    ),
+                      Navigator.of(context).pushNamed('/memo');
+                    },
                   ),
-                  onTap: () {
-                    SystemNavigator.pop();
-                  },
-                ),
-              ],
-            ),
-          ],
+                  ListTile(
+                    title: Text(
+                      'Sair',
+                      style: TextStyle(
+                        color: corRoxoMedio,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    onTap: () {
+                      SystemNavigator.pop();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       appBar: AppBar(

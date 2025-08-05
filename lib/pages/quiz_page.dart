@@ -97,6 +97,11 @@ class _QuizPageState extends State<QuizPage> {
         if (paginaAtual == 1) {
           animacaoEntradaVF();
         }
+        if (paginaAtual == 2) {
+          await Future.delayed(Duration(milliseconds: 500), () {
+            setState(() {});
+          });
+        }
       }
     }
     setState(() {});
@@ -241,34 +246,52 @@ class _QuizPageState extends State<QuizPage> {
                             mainAxisAlignment:
                                 MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'Verdadeiro',
-                                style: TextStyle(
-                                  color:
-                                      listQuiz[perguntaAtual]['resposta'] ==
-                                              0 &&
-                                          confirmar
-                                      ? Colors.green
-                                      : alternativaSelecionada == 0
-                                      ? corRoxoMedio
-                                      : corEscuro,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
+                              GestureDetector(
+                                onTap: !entradaVF
+                                    ? () {
+                                        setState(() {
+                                          alternativaSelecionada = 0;
+                                        });
+                                      }
+                                    : null,
+                                child: Text(
+                                  'Verdadeiro',
+                                  style: TextStyle(
+                                    color:
+                                        listQuiz[perguntaAtual]['resposta'] ==
+                                                0 &&
+                                            confirmar
+                                        ? Colors.green
+                                        : alternativaSelecionada == 0
+                                        ? corRoxoMedio
+                                        : corEscuro,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
-                              Text(
-                                'Falso',
-                                style: TextStyle(
-                                  color:
-                                      listQuiz[perguntaAtual]['resposta'] ==
-                                              1 &&
-                                          confirmar
-                                      ? Colors.green
-                                      : alternativaSelecionada == 1
-                                      ? corRoxoMedio
-                                      : corEscuro,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
+                              GestureDetector(
+                                onTap: !entradaVF
+                                    ? () {
+                                        setState(() {
+                                          alternativaSelecionada = 1;
+                                        });
+                                      }
+                                    : null,
+                                child: Text(
+                                  'Falso',
+                                  style: TextStyle(
+                                    color:
+                                        listQuiz[perguntaAtual]['resposta'] ==
+                                                1 &&
+                                            confirmar
+                                        ? Colors.green
+                                        : alternativaSelecionada == 1
+                                        ? corRoxoMedio
+                                        : corEscuro,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -294,7 +317,128 @@ class _QuizPageState extends State<QuizPage> {
                   )
                 : Container(),
           ),
-          Container(),
+          Container(
+            child: paginaAtual == 2
+                ? SafeArea(
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.all(20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          spacing: 10,
+                          children: [
+                            Text(
+                              listQuiz[perguntaAtual]['enunciado'],
+                              style: TextStyle(
+                                color: corRoxoMedio,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: List.generate(3, (index) {
+                                return Draggable(
+                                  data:
+                                      listQuiz[perguntaAtual]['resposta'][index][0],
+                                  feedback: Container(
+                                    width:
+                                        MediaQuery.sizeOf(
+                                          context,
+                                        ).width *
+                                        0.25,
+                                    decoration: BoxDecoration(),
+                                    child: Padding(
+                                      padding: EdgeInsetsGeometry.all(
+                                        20,
+                                      ),
+                                      child: Text(
+                                        overflow:
+                                            TextOverflow.ellipsis,
+                                        listQuiz[perguntaAtual]['alternativas'][0][index],
+                                      ),
+                                    ),
+                                  ),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(
+                                          context,
+                                        ).width *
+                                        0.25,
+                                    decoration: BoxDecoration(),
+                                    child: Padding(
+                                      padding: EdgeInsetsGeometry.all(
+                                        20,
+                                      ),
+                                      child: Text(
+                                        overflow:
+                                            TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        listQuiz[perguntaAtual]['alternativas'][0][index],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                            ),
+                            Row(
+                              spacing: 10,
+                              children: List.generate(3, (index) {
+                                int respota =
+                                    listQuiz[perguntaAtual]['resposta'][index][1];
+                                return DragTarget(
+                                  onAcceptWithDetails: (details) {
+                                    if (details.data! == respota) {
+                                      print('correto');
+                                    } else {
+                                      print('errado');
+                                    }
+                                  },
+                                  builder:
+                                      (
+                                        context,
+                                        candidateData,
+                                        rejectedData,
+                                      ) {
+                                        return Container(
+                                          width:
+                                              MediaQuery.sizeOf(
+                                                context,
+                                              ).width *
+                                              0.25,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              width: 1.5,
+                                              color: corRoxoMedio,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(
+                                                  10,
+                                                ),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsGeometry.all(
+                                                  20,
+                                                ),
+                                            child: Text(
+                                              overflow: TextOverflow
+                                                  .ellipsis,
+                                              maxLines: 3,
+                                              listQuiz[perguntaAtual]['alternativas'][1][index],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                );
+                              }),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
+          ),
         ],
       ),
       bottomNavigationBar: SafeArea(
